@@ -1,10 +1,20 @@
 <template>
   <div class="grid__thumbnails">
-    <!-- so this v-for here is fucking something up. I HAVE TO USE VUEX :>D -->
-    <Thumbnail v-for="image in images" :key="image.id"
-      :imgSrc="image.link"/>
-    <!-- Here exec the request -->
-    <!-- {{requestPost()}} -->
+    <Thumbnail v-for="image in images"
+      :key="image.id">
+      <template v-if="!(image.images && image.images[0].mp4)" v-slot:media>
+        <img style="width: inherit; height: inherit;"
+          :src="image.cover ? `//i.imgur.com/${image.cover}.jpg` : image.link"/>
+      </template>
+      <template v-else v-slot:media>
+        <video style="width: inherit; height: inherit;" type="video/mp4"
+          :src="`https://i.imgur.com/${image.cover}.mp4`" controls>
+        </video>
+      </template>
+      <template v-slot:description>
+        {{image.title}}
+      </template>
+    </Thumbnail>
   </div>
 </template>
 
@@ -24,27 +34,10 @@ export default {
   },
   computed: {
     images() {
-      console.log('imagessssssssssssssssssssssssssss: ', this.$store.state.imagesList);
       return this.$store.state.imagesList;
     },
   },
   methods: {
-    // requestPost() {
-    //   return new Promise(() => {
-    //     const req = new XMLHttpRequest();
-    //     req.open('GET', this.requestUrl, true);
-    //     req.setRequestHeader('Authorization', `Client-ID ${this.myClientId}`);
-
-    //     req.onreadystatechange = function () {
-    //       if (req.readyState === 4 && req.status === 200) {
-    //         console.log(JSON.parse(req.responseText));
-    //       } else {
-    //         console.log('Error with Imgur Request.');
-    //       }
-    //     };
-    //     req.send();
-    //   });
-    // },
   },
   mounted() {
     this.$store.dispatch('requestImages');
@@ -58,7 +51,6 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     padding: .5rem;
-    background-color: red;
   }
 
 </style>

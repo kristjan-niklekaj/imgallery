@@ -1,9 +1,12 @@
 <template>
-  <div class="thumbnail">
-    <div class="thumbnail__imageContainer">
-      <img class="thumbnail__image" :src="imgSrc" />
+  <div class="thumbnail" @click="$emit('popup')">
+    <div class="thumbnail__mediaContainer">
+      <slot class="thumbnail__media" name="media"/>
     </div>
-    <div class="thumbnail__description">
+    <div class="thumbnail__descriptionContainer">
+      <div class="thumbnail__description">
+        <slot name="description"/>
+      </div>
     </div>
   </div>
 </template>
@@ -12,10 +15,12 @@
 export default {
   name: 'thumbnail',
   props: {
-    imgSrc: {
-      type: String,
-      default: '',
+    popup: {
+      type: Boolean,
+      default: false,
     },
+  },
+  methods: {
   },
 };
 </script>
@@ -24,27 +29,38 @@ export default {
   .thumbnail {
     position: relative;
     width: 24rem;
-    height: 20rem;
+    height: 24rem;
     margin: .5rem;
     background-color:black;
 
-    &__imageContainer {
-      height: 14rem;
+    &__mediaContainer {
+      height: 17rem;
       width: 100%;
-      background-color: yellow;
     }
 
-    &__image {
+    &__media {
       height: 100%;
       width: 100%;
     }
 
-    &__description {
+    &__descriptionContainer {
       position: absolute;
       bottom: 0;
-      height: 5rem;
+      height: 7rem;
       width: 100%;
-      background-color: blue;
+      background-color: #4a4c50;
+    }
+
+    &__description {
+      width: inherit;
+      height: inherit;
+      font-size: 1.6rem;
+      padding: 1rem;
+      color: white;
+      border: 1px solid red;
+      box-sizing: border-box;
+      overflow-y: hidden;
+      text-overflow: ellipsis;
     }
   }
 </style>
