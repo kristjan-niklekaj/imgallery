@@ -31,7 +31,6 @@ export default {
     width: 24rem;
     height: 24rem;
     margin: .5rem;
-    background-color:black;
 
     &__mediaContainer {
       height: 17rem;
@@ -57,9 +56,9 @@ export default {
       font-size: 1.6rem;
       padding: 1rem;
       color: white;
-      border: 1px solid red;
       box-sizing: border-box;
-      overflow-y: hidden;
+      overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis;
     }
   }
