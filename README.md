@@ -1,6 +1,6 @@
 # imgallery
 
-## Run the project locally with 3 steps (after the cloning):
+## Run the project locally with first 3 steps (after the cloning):
 
 ## Project setup
 ```
