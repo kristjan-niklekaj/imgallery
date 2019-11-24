@@ -14,22 +14,28 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    requestImages({ commit }) {
-      return new Promise(() => {
+    requestImages({ commit }, item) {
+      return new Promise((resolve, reject) => {
         const myClientId = 'adb3ff1e7f8b93d';
-        const requestUrl = 'https://api.imgur.com/3/gallery/hot/0.json';
+        let requestUrl;
+        if (item) {
+          requestUrl = `https://api.imgur.com/3/gallery/${item}/0.json`;
+        } else {
+          requestUrl = 'https://api.imgur.com/3/gallery/hot/0.json';
+        }
         const req = new XMLHttpRequest();
         req.open('GET', requestUrl, true);
         req.setRequestHeader('Authorization', `Client-ID ${myClientId}`);
 
-        req.onreadystatechange = function () {
+        req.onload = function () {
           if (req.readyState === 4 && req.status === 200) {
             const imagesArrow = JSON.parse(req.responseText);
-            commit('acquireImages', imagesArrow);
+            resolve(commit('acquireImages', imagesArrow));
           } else {
-            console.log('Error with Imgur Request.');
+            reject(Error(req.statusText));
           }
         };
+        req.onerror = () => reject(Error('Error with Imgur request'));
         req.send();
       });
     },

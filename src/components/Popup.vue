@@ -57,6 +57,8 @@ export default {
         }
 
         &__description {
+            display: flex;
+            flex-direction: column;
             height: inherit;
             font-size: 1.6rem;
             padding: 1rem;
