@@ -12,6 +12,7 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
+  command: 'publish'
     versionSpec: '10.x'
     zipAfterPublish: true
   displayName: 'Install Node.js'
